@@ -16,14 +16,13 @@ for i in range(65, 91):
   if search:
     for location in search:
       doc = {
-        'city': location[0],
+        'city': location[0].rstrip(': '),
         'lat' : location[1] + '.' + location[2],
         'long': location[3] + '.' + location[4],
       }
       if '<a href' in doc['city']:
         replace = re.compile('<a href.*>(.+?)</a>')
         doc['city'] = replace.sub('\\1', doc['city'])
-      doc['city'] = doc['city'].rstrip(': ')
       count += 1
       db.locations.insert(doc)
 print 'Got %d locations' % count
